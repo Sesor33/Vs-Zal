@@ -377,6 +377,24 @@ class Character extends FlxSprite
 
 				loadOffsetFile(curCharacter);
 
+				
+
+
+			case 'zalrek':
+				//REPLACE LATER
+				frames = Paths.getSparrowAtlas('ZalTestAssets','shared',true);
+				animation.addByPrefix('idle', 'ZalIdle', 24, false);
+				animation.addByPrefix('singUP', 'Zal Up', 24, false);
+				animation.addByPrefix('singDOWN', 'Zal Down', 24, false);
+				animation.addByPrefix('singLEFT', 'Zal Left', 24, false);
+				animation.addByPrefix('singRIGHT', 'Zal Right', 24, false);
+
+				addOffset("idle");
+				addOffset("singUP");
+				addOffset("singDOWN");
+				addOffset("singLEFT");
+				addOffset("singRIGHT");
+
 				playAnim('idle');
 		}
 
