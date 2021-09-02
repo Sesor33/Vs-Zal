@@ -874,6 +874,8 @@ class PlayState extends MusicBeatState
               healthBar.createFilledBar(0xFFF76D6D, 0xFF0097C4);
              case 'spirit':
               healthBar.createFilledBar(0xFFAD0505, 0xFF0097C4);
+			 case 'zalrek':
+              healthBar.createFilledBar(0xFF820F0F, 0xFF0097C4);
             }
         }
         else
