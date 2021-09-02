@@ -382,20 +382,12 @@ class Character extends FlxSprite
 
 			case 'zalrek':
 				//REPLACE LATER
-				frames = Paths.getSparrowAtlas('ZalTestAssets','shared',true);
+				frames = Paths.getSparrowAtlas('Zalrek_Assets','shared',true);
 				animation.addByPrefix('idle', 'ZalIdle', 24, false);
 				animation.addByPrefix('singUP', 'Zal Up', 24, false);
 				animation.addByPrefix('singDOWN', 'Zal Down', 24, false);
 				animation.addByPrefix('singLEFT', 'Zal Left', 24, false);
 				animation.addByPrefix('singRIGHT', 'Zal Right', 24, false);
-
-			/*	
-				addOffset("idle");
-				addOffset("singUP");
-				addOffset("singDOWN");
-				addOffset("singLEFT");
-				addOffset("singRIGHT");
-				*/
 
 				loadOffsetFile(curCharacter);
 
