@@ -381,7 +381,6 @@ class Character extends FlxSprite
 
 
 			case 'zalrek':
-				//REPLACE LATER
 				frames = Paths.getSparrowAtlas('Zalrek_Assets','shared',true);
 				animation.addByPrefix('idle', 'ZalIdle', 24, false);
 				animation.addByPrefix('singUP', 'Zal Up', 24, false);
