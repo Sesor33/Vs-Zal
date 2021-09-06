@@ -395,6 +395,35 @@ class Stage
 							add(waveSpriteFG);
 						 */
 					}
+
+				case 'zalrekLair':
+					var bgSky = new FlxSprite().loadGraphic(Paths.image('lair/lairBg', 'week7'));
+					bgSky.scrollFactor.set(0.1, 0.1);
+					swagBacks['bgSky'] = bgSky;
+                    toAdd.push(bgSky);
+
+					var repositionShit = 0;
+
+					var bgFloor:FlxSprite = new FlxSprite(-550, -150).loadGraphic(Paths.image('lair/lairFloor', 'week7'));
+					bgFloor.scrollFactor.set(0.6, 0.90);
+					bgFloor.scale.set(0.7,0.7);
+					swagBacks['bgFloor'] = bgFloor;
+                    toAdd.push(bgFloor);
+
+					var bgWall:FlxSprite = new FlxSprite(-550,-150).loadGraphic(Paths.image('lair/lairWall', 'week7'));
+					bgWall.scrollFactor.set(0.95, 0.95);
+					bgWall.scale.set(0.7,0.7);
+					swagBacks['bgWall'] = bgWall;
+                    toAdd.push(bgWall);
+
+					var bgPillars:FlxSprite = new FlxSprite(-550, -150).loadGraphic(Paths.image('lair/lairPillars', 'week7'));
+					bgPillars.scrollFactor.set(0.9, 0.9);
+					bgPillars.scale.set(0.7,0.7);
+					swagBacks['bgPillars'] = bgPillars;
+                    toAdd.push(bgPillars);
+
+
+				
 				default:
 					{
 						camZoom = 0.9;
