@@ -398,14 +398,15 @@ class Stage
 
 				case 'zalrekLair':
 					camZoom = .95;
-					var bgSky = new FlxSprite(-600, -250).loadGraphic(Paths.image('lair/lairBg', 'week7'));
+					var bgSky = new FlxSprite(-650, -350).loadGraphic(Paths.image('lair/lairBg', 'week7'));
 					bgSky.scrollFactor.set(0.1, 0.1);
+					bgSky.scale.set(0.9,0.9);
 					swagBacks['bgSky'] = bgSky;
                     toAdd.push(bgSky);
 
-					var bgDetails:FlxSprite = new FlxSprite(-650, -250).loadGraphic(Paths.image('lair/lairDetails', 'week7'));
-					bgDetails.scrollFactor.set(0.6, 0.90);
-					bgDetails.scale.set(0.75,0.75);
+					var bgDetails:FlxSprite = new FlxSprite(-650, -300).loadGraphic(Paths.image('lair/lairDetails', 'week7'));
+					bgDetails.scrollFactor.set(1, 1);
+					bgDetails.scale.set(0.85,0.85);
 					swagBacks['bgDetails'] = bgDetails;
                     toAdd.push(bgDetails);
 
