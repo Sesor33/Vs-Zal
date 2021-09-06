@@ -397,13 +397,20 @@ class Stage
 					}
 
 				case 'zalrekLair':
-					var bgSky = new FlxSprite().loadGraphic(Paths.image('lair/lairBg', 'week7'));
+					camZoom = .95;
+					var bgSky = new FlxSprite(-600, -250).loadGraphic(Paths.image('lair/lairBg', 'week7'));
 					bgSky.scrollFactor.set(0.1, 0.1);
 					swagBacks['bgSky'] = bgSky;
                     toAdd.push(bgSky);
 
-					var repositionShit = 0;
+					var bgDetails:FlxSprite = new FlxSprite(-650, -250).loadGraphic(Paths.image('lair/lairDetails', 'week7'));
+					bgDetails.scrollFactor.set(0.6, 0.90);
+					bgDetails.scale.set(0.75,0.75);
+					swagBacks['bgDetails'] = bgDetails;
+                    toAdd.push(bgDetails);
 
+					var repositionShit = 0;
+				/*
 					var bgFloor:FlxSprite = new FlxSprite(-550, -150).loadGraphic(Paths.image('lair/lairFloor', 'week7'));
 					bgFloor.scrollFactor.set(0.6, 0.90);
 					bgFloor.scale.set(0.7,0.7);
@@ -421,7 +428,7 @@ class Stage
 					bgPillars.scale.set(0.7,0.7);
 					swagBacks['bgPillars'] = bgPillars;
                     toAdd.push(bgPillars);
-
+				*/
 
 				
 				default:
