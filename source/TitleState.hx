@@ -131,17 +131,17 @@ class TitleState extends MusicBeatState
 		add(bg);
 
 		if (Main.watermarks) {
-			logoBl = new FlxSprite(325, 0);
+			logoBl = new FlxSprite(350, 700);
 			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		} else {
 			logoBl = new FlxSprite(0, 0);
 			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		}
 		logoBl.antialiasing = FlxG.save.data.antialiasing;
+		//logoBl.scale.set(0.9,0.9);
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.updateHitbox();
-		// logoBl.screenCenter();
-		// logoBl.color = FlxColor.BLACK;
+		
 
 	/*
 		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
@@ -455,7 +455,7 @@ class TitleState extends MusicBeatState
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 
-			FlxTween.tween(logoBl,{y: -1}, 1.4, {ease: FlxEase.expoInOut});
+			FlxTween.tween(logoBl,{y: -5}, 1.4, {ease: FlxEase.expoInOut});
 
 			logoBl.angle = -4;
 
