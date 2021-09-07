@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="Zalrek_Assets.png">
+<TextureAtlas imagePath="Zal_AssetsShaded.png">
 	<!-- Created with Adobe Animate version 19.0.0.326 -->
 	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="Zal Down0000" x="0" y="0" width="313" height="667" frameX="0" frameY="-4" frameWidth="313" frameHeight="671"/>
