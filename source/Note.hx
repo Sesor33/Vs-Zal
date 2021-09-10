@@ -13,6 +13,11 @@ import PlayState;
 
 using StringTools;
 
+enum NoteType{
+	Normal;
+	Goop;
+}
+
 class Note extends FlxSprite
 {
 	public var strumTime:Float = 0;
@@ -40,6 +45,9 @@ class Note extends FlxSprite
 	public var isAlt:Bool = false;
 
 	public var noteCharterObject:FlxSprite;
+
+	//Zalrek related variables
+	public var noteType:NoteType = NoteType.Normal;
 
 	public var noteScore:Float = 1;
 
@@ -70,7 +78,7 @@ class Note extends FlxSprite
 
 	public var children:Array<Note> = [];
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inCharter:Bool = false, ?isAlt:Bool = false, ?bet:Float = 0)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inCharter:Bool = false, ?isAlt:Bool = false, ?bet:Float = 0, ?type:NoteType)
 	{
 		super();
 
