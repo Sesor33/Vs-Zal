@@ -1665,6 +1665,7 @@ class PlayState extends MusicBeatState
 				if (daStrumTime < 0)
 					daStrumTime = 0;
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
+				var daNoteStyle:String = songNotes[5];
 
 				var gottaHitNote:Bool = true;
 
@@ -1679,8 +1680,9 @@ class PlayState extends MusicBeatState
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 				else
 					oldNote = null;
-
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote,false,false,false,songNotes[4]);
+				//Zalrek mod stuff
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote,false,false,false,songNotes[4], daNoteStyle);
+				trace (daNoteStyle);
 
 				if (!gottaHitNote && PlayStateChangeables.Optimize)
 					continue;
@@ -1704,7 +1706,8 @@ class PlayState extends MusicBeatState
 				{
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true);
+					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true, daNoteStyle);
+					trace (daNoteStyle);
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
 					sustainNote.isAlt = songNotes[3];
@@ -1796,7 +1799,16 @@ class PlayState extends MusicBeatState
 					}
 
 				default:
-					babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+					//Zalrek stuff
+					if (dad.curCharacter == 'zalrek' && player == 0) {					
+						trace('Demon detected, change strumline to be spooky');
+						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets_zal');
+					}
+
+					else {
+						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+					}
+					
 					for (j in 0...4)
 					{
 						babyArrow.animation.addByPrefix(dataColor[j], 'arrow' + dataSuffix[j]);	
@@ -1805,7 +1817,7 @@ class PlayState extends MusicBeatState
 
 					var lowerDir:String = dataSuffix[i].toLowerCase();
 
-					babyArrow.animation.addByPrefix('static', 'arrow' + dataSuffix[i]);
+					babyArrow.animation.addByPrefix('static', 'arrow' + dataSuffix[i]);					
 					babyArrow.animation.addByPrefix('pressed', lowerDir + ' press', 24, false);
 					babyArrow.animation.addByPrefix('confirm', lowerDir + ' confirm', 24, false);
 

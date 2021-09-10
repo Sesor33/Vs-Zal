@@ -15,6 +15,7 @@ using StringTools;
 
 enum NoteType{
 	Normal;
+	Unholy;
 	Goop;
 }
 
@@ -48,6 +49,7 @@ class Note extends FlxSprite
 
 	//Zalrek related variables
 	public var noteType:NoteType = NoteType.Normal;
+	public var noteStyle:String = "normal";
 
 	public var noteScore:Float = 1;
 
@@ -78,10 +80,10 @@ class Note extends FlxSprite
 
 	public var children:Array<Note> = [];
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inCharter:Bool = false, ?isAlt:Bool = false, ?bet:Float = 0, ?type:NoteType)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inCharter:Bool = false, ?isAlt:Bool = false, ?bet:Float = 0, ?noteStyle:String = "normal")
 	{
 		super();
-
+		this.noteStyle = noteStyle;
 		if (prevNote == null)
 			prevNote = this;
 
@@ -129,10 +131,25 @@ class Note extends FlxSprite
 
 		//defaults if no noteStyle was found in chart
 		var noteTypeCheck:String = 'normal';
-
+/*
+		switch (noteType) {
+			case Unholy:
+				
+		}
+*/
 		if (inCharter)
 		{
-			frames = Paths.getSparrowAtlas('NOTE_assets');
+			var notePath:String = 'NOTE_assets';
+			switch(noteStyle) {
+				case 'unholy':
+					notePath = 'NOTE_assets_zal_unholy';
+				case 'goop':
+					notePath = 'NOTE_assets_zal_unholy';
+				default:
+					notePath = 'NOTE_assets';
+			}
+		
+			frames = Paths.getSparrowAtlas(notePath);
 
 			for (i in 0...4)
 			{
@@ -167,8 +184,19 @@ class Note extends FlxSprite
 
 					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 					updateHitbox();
+				//Zalrek mod stuff
 				default:
-					frames = Paths.getSparrowAtlas('NOTE_assets');
+					var notePath:String = 'NOTE_assets';
+					switch(noteStyle) {
+						case 'unholy':
+							notePath = 'NOTE_assets_zal_unholy';
+						case 'goop':
+							notePath = 'NOTE_assets_zal_unholy';
+						default:
+							notePath = 'NOTE_assets';
+					}
+
+					frames = Paths.getSparrowAtlas(notePath);
 
 					for (i in 0...4)
 					{

@@ -90,6 +90,12 @@ class ChartingState extends MusicBeatState
 	var writingNotesText:FlxText;
 	var highlight:FlxSprite;
 
+	//Zalrek mods stuff
+	var noteStyle:Int = 0;
+	var styles:Array<String> = ['normal','unholy', 'goop'];
+
+	var noteTypeText:FlxText = new FlxText(-200,0,0, "Charting: ", 18);
+
 	var GRID_SIZE:Int = 40;
 
 	var subDivisions:Float = 1;
@@ -158,7 +164,7 @@ class ChartingState extends MusicBeatState
 		deezNuts.set(32,8);
 		deezNuts.set(64,16);
 
-
+		
 		sectionRenderes = new FlxTypedGroup<SectionRender>();
 		lines = new FlxTypedGroup<FlxSprite>();
 		texts = new FlxTypedGroup<FlxText>();
@@ -361,6 +367,9 @@ class ChartingState extends MusicBeatState
 
 		add(leftIcon);
 		add(rightIcon);
+		//Zalrek mod stuff
+		noteTypeText.scrollFactor.set(0);
+		add(noteTypeText);
 
 		leftIcon.setPosition(0, -100);
 		rightIcon.setPosition(gridBG.width / 2, -100);
@@ -2594,8 +2603,25 @@ class ChartingState extends MusicBeatState
 					FlxG.sound.music.play();
 				}
 			}
+			//Zalrek mod stuff
+			if (FlxG.keys.justPressed.Z) {
+				trace('Z pressed, ppPoof');				
+				this.noteStyle--;
+				if (noteStyle < 0){
+					noteStyle = styles.length - 1;
+				}
+				trace(noteStyle);
+			}
 
-			
+			if (FlxG.keys.justPressed.X) {
+				trace('X pressed, peepoArrive');
+				this.noteStyle++;
+				if (noteStyle == styles.length){
+					noteStyle = 0;
+				}
+				trace(noteStyle);
+			}
+
 			if (FlxG.sound.music.time < 0 || curDecimalBeat < 0)
 				FlxG.sound.music.time = 0;
 
@@ -2837,8 +2863,9 @@ class ChartingState extends MusicBeatState
 				var daNoteInfo = i[1];
 				var daStrumTime = i[0];
 				var daSus = i[2];
+				var daStyle = i[5];
 
-				var note:Note = new Note(daStrumTime, daNoteInfo % 4,null,false,true,i[3], i[4]);
+				var note:Note = new Note(daStrumTime, daNoteInfo % 4,null,false,true,i[3], i[4],daStyle);
 				note.rawNoteData = daNoteInfo;
 				note.sustainLength = daSus;
 				note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
@@ -3176,11 +3203,12 @@ class ChartingState extends MusicBeatState
 		var noteStrum = strum;
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
 		var noteSus = 0;
+		var noteStyle = styles[this.noteStyle];
 
 		if (n != null)
-			section.sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, false, TimingStruct.getBeatFromTime(n.strumTime)]);
+			section.sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, false, TimingStruct.getBeatFromTime(n.strumTime), noteStyle]);
 		else
-			section.sectionNotes.push([noteStrum, noteData, noteSus, false, TimingStruct.getBeatFromTime(noteStrum)]);
+			section.sectionNotes.push([noteStrum, noteData, noteSus, false, TimingStruct.getBeatFromTime(noteStrum), noteStyle]);
 
 		var thingy = section.sectionNotes[section.sectionNotes.length - 1];
 
@@ -3190,7 +3218,7 @@ class ChartingState extends MusicBeatState
 
 		if (n == null)
 		{
-			var note:Note = new Note(noteStrum, noteData % 4,null,false,true,TimingStruct.getBeatFromTime(noteStrum));
+			var note:Note = new Note(noteStrum, noteData % 4,null,false,true,TimingStruct.getBeatFromTime(noteStrum),styles[this.noteStyle]);
 			note.rawNoteData = noteData;
 			note.sustainLength = noteSus;
 			note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
@@ -3220,7 +3248,7 @@ class ChartingState extends MusicBeatState
 		}
 		else
 		{
-			var note:Note = new Note(n.strumTime, n.noteData % 4,null,false,true, n.isAlt,TimingStruct.getBeatFromTime(n.strumTime));
+			var note:Note = new Note(n.strumTime, n.noteData % 4,null,false,true, n.isAlt,TimingStruct.getBeatFromTime(n.strumTime), styles[this.noteStyle]);
 			note.beat = TimingStruct.getBeatFromTime(n.strumTime);
 			note.rawNoteData = n.noteData;
 			note.sustainLength = noteSus;
