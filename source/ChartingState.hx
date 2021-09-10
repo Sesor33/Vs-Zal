@@ -1418,12 +1418,12 @@ class ChartingState extends MusicBeatState
 					{
 						trace("new strum " + strum + " - at section " + section);
 						// alright we're in this section lets paste the note here.
-						var newData = [strum,i[1],i[2],i[3],i[4]];
+						var newData = [strum,i[1],i[2],i[3],i[4],i[5]];
 						ii.sectionNotes.push(newData);
 
 						var thing = ii.sectionNotes[ii.sectionNotes.length - 1];
 
-						var note:Note = new Note(strum, Math.floor(i[1] % 4),null,false,true,i[3], i[4]);
+						var note:Note = new Note(strum, Math.floor(i[1] % 4),null,false,true,i[3], i[4],i[5]);
 						note.rawNoteData = i[1];
 						note.sustainLength = i[2];
 						note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
