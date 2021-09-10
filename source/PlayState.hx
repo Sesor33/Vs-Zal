@@ -250,6 +250,15 @@ class PlayState extends MusicBeatState
 	// Will decide if she's even allowed to headbang at all depending on the song
 	private var allowedToHeadbang:Bool = false;
 
+	//Zalrek Goop Note stuff
+	var healthBlockGoop:Float = 0.002;
+	var goopStacks:Int = 0;
+
+	//Zalrek final song death dialogue
+	public static var deaths:Int = 0;
+	public static var speechBubble:FlxSprite;
+	public static var zalPortrait:FlxSprite;
+
 	// Per song additive offset
 	public static var songOffset:Float = 0;
 
@@ -2740,6 +2749,10 @@ class PlayState extends MusicBeatState
 				persistentUpdate = false;
 				persistentDraw = false;
 				paused = true;
+
+				//Zalrek stuff
+				//Reset goop stacks on death
+				goopStacks = 0;
 
 				vocals.stop();
 				FlxG.sound.music.stop();
