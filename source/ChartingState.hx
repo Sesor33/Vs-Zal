@@ -210,7 +210,8 @@ class ChartingState extends MusicBeatState
 			};
 		}
 
-		addGrid(1);
+		//addGrid(1);
+		
 
 		if (_song.chartVersion == null)
 			_song.chartVersion = "2";
@@ -322,6 +323,8 @@ class ChartingState extends MusicBeatState
 		lengthInSteps = lengthInBeats * 4;
 
 		trace('LENGTH IN STEPS ' + lengthInSteps + ' | LENGTH IN BEATS ' + lengthInBeats + ' | SECTIONS: ' + Math.floor(((lengthInSteps + 16)) / 16));
+
+		addGrid(1);
 
 		var sections = Math.floor(((lengthInSteps + 16)) / 16);
 
@@ -531,6 +534,7 @@ class ChartingState extends MusicBeatState
 
 	function addGrid(?divisions:Float = 1)
 	{
+		trace('addGrid called');
 		// This here is because non-integer numbers aren't supported as grid sizes, making the grid slowly 'drift' as it goes on
 		var h = GRID_SIZE / divisions;
 		if (Math.floor(h) != h)
@@ -538,11 +542,12 @@ class ChartingState extends MusicBeatState
 
 		remove(gridBG);
 		gridBG = FlxGridOverlay.create(GRID_SIZE, Std.int(h), GRID_SIZE * 8,GRID_SIZE * 16);
-		trace(gridBG.height);
+		trace(gridBG.height);	
 		//gridBG.scrollFactor.set();
 		//gridBG.x += 358;
 		//gridBG.y += 390;
 		trace("height of " + (Math.floor(lengthInSteps)));
+		trace('Grid BG was made');
 
 
 		/*for(i in 0...Math.floor(lengthInSteps))
@@ -556,10 +561,10 @@ class ChartingState extends MusicBeatState
 
 		var totalHeight = 0;
 
-		//add(gridBG);
+		add(gridBG);
 
 		
-		remove(gridBlackLine);
+		(gridBlackLine);
 		gridBlackLine = new FlxSprite(0 + gridBG.width / 2).makeGraphic(2, Std.int(Math.floor(lengthInSteps)), FlxColor.BLACK);
 		add(gridBlackLine);
 	}
