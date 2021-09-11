@@ -949,7 +949,7 @@ class PlayState extends MusicBeatState
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 
 		if (curSong == 'Hell') {
-			goopIcon = new FlxSprite(iconP1.x + 75, healthBar.y + (PlayStateChangeables.useDownscroll ? 25 : -75) + -150).loadGraphic(Paths.image('Goo_Splat'));
+			goopIcon = new FlxSprite(iconP1.x + 75, healthBar.y + (PlayStateChangeables.useDownscroll ? 25 : -75) + -220).loadGraphic(Paths.image('Goo_Splat'));
 			goopIcon.scale.set(0.2, 0.2);
 		}
 
@@ -2354,6 +2354,8 @@ class PlayState extends MusicBeatState
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
+		//Zalrek related code
+		goopIcon.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - 140);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
 		if (health > 2)
