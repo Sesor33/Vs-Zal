@@ -224,6 +224,10 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var replayTxt:FlxText;
 
+	//Zalrek specific variables
+	var goopIcon:FlxSprite;
+	var goopText:FlxText;
+
 	public static var campaignScore:Int = 0;
 
 	public static var daPixelZoom:Float = 6;
@@ -938,8 +942,18 @@ class PlayState extends MusicBeatState
 		if (PlayStateChangeables.botPlay && !loadRep)
 			add(botPlayState);
 
+
+		
+
 		iconP1 = new HealthIcon(boyfriend.curCharacter, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
+
+		if (curSong == 'Hell') {
+			goopIcon = new FlxSprite(iconP1.x + 75, healthBar.y + (PlayStateChangeables.useDownscroll ? 25 : -75) + -150).loadGraphic(Paths.image('Goo_Splat'));
+			goopIcon.scale.set(0.2, 0.2);
+		}
+
+		add(goopIcon);
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.curCharacter, false);
@@ -953,6 +967,11 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+
+		if (SONG.song == 'Hell') {
+			goopIcon.cameras = [camHUD];
+		}
+
 		if (isStoryMode)
 			doof.cameras = [camHUD];
 		if (FlxG.save.data.songPosition)
