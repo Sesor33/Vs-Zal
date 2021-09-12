@@ -2870,6 +2870,7 @@ class ChartingState extends MusicBeatState
 				var daSus = i[2];
 				var daStyle = i[5];
 
+				//Zalrek mod related stuff, daStyle is new
 				var note:Note = new Note(daStrumTime, daNoteInfo % 4,null,false,true,i[3], i[4],daStyle);
 				note.rawNoteData = daNoteInfo;
 				note.sustainLength = daSus;
