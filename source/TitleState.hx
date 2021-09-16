@@ -6,6 +6,7 @@ import smTools.SMFile;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
@@ -46,6 +47,10 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+
+	//Zalrek mod variables
+	var embersFG:FlxBackdrop;
+	var embersBG:FlxBackdrop;
 
 	var curWacky:Array<String> = [];
 
@@ -129,6 +134,20 @@ class TitleState extends MusicBeatState
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
 		add(bg);
+
+		//Zalrek mod related stuff
+		embersFG = new FlxBackdrop(Paths.image('embersFG'), 1, 1, true, true);
+		embersFG.updateHitbox();
+		embersFG.antialiasing = true;
+		embersFG.scrollFactor.set();
+		add(embersFG);
+
+		embersBG = new FlxBackdrop(Paths.image('embersBG'), 1, 1, true, true);
+		embersBG.updateHitbox();
+		embersBG.antialiasing = true;
+		embersBG.scrollFactor.set();
+		add(embersBG);
+
 
 		if (Main.watermarks) {
 			logoBl = new FlxSprite(350, 700);
@@ -258,6 +277,9 @@ class TitleState extends MusicBeatState
 			FlxG.fullscreen = !FlxG.fullscreen;
 		}
 
+		embersFG.y -= 0.15;
+		embersBG.y -= 0.06;
+
 		var pressedEnter:Bool = controls.ACCEPT;
 
 		#if mobile
@@ -283,7 +305,7 @@ class TitleState extends MusicBeatState
 			if (FlxG.save.data.flashing)
 				titleText.animation.play('press');
 
-			FlxG.camera.flash(FlxColor.WHITE, 1);
+			FlxG.camera.flash(FlxColor.RED, 1);
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
@@ -452,7 +474,7 @@ class TitleState extends MusicBeatState
 		{
 			remove(ngSpr);
 
-			FlxG.camera.flash(FlxColor.WHITE, 4);
+			FlxG.camera.flash(FlxColor.RED, 4);
 			remove(credGroup);
 
 			FlxTween.tween(logoBl,{y: -5}, 1.4, {ease: FlxEase.expoInOut});
