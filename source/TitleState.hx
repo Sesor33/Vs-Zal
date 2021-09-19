@@ -51,6 +51,7 @@ class TitleState extends MusicBeatState
 	//Zalrek mod variables
 	var embersFG:FlxBackdrop;
 	var embersBG:FlxBackdrop;
+	var titleBG:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -136,6 +137,12 @@ class TitleState extends MusicBeatState
 		add(bg);
 
 		//Zalrek mod related stuff
+		titleBG = new FlxSprite().loadGraphic(Paths.image('titleBG'));
+		titleBG.screenCenter();
+		titleBG.scale.set(1.3,1.3);
+		titleBG.antialiasing = true;
+		add(titleBG);
+
 		embersFG = new FlxBackdrop(Paths.image('embersFG'), 1, 1, true, true);
 		embersFG.updateHitbox();
 		embersFG.antialiasing = true;
