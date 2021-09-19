@@ -948,13 +948,17 @@ class PlayState extends MusicBeatState
 		iconP1 = new HealthIcon(boyfriend.curCharacter, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 
+		//Zalrek mod stuff
 		if (curSong == 'Hell') {
 			goopIcon = new FlxSprite(iconP1.x + 75, healthBar.y + (PlayStateChangeables.useDownscroll ? 25 : -75) + -220).loadGraphic(Paths.image('Goo_Splat'));
 			goopIcon.scale.set(0.2, 0.2);
+			goopText = new FlxText(goopIcon.x + 235, goopIcon.y + 225, '0', 20);
+			goopText.color = FlxColor.RED;
 		}
 
 		add(goopIcon);
 		add(iconP1);
+		add(goopText);
 
 		iconP2 = new HealthIcon(dad.curCharacter, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
@@ -970,6 +974,7 @@ class PlayState extends MusicBeatState
 
 		if (SONG.song == 'Hell') {
 			goopIcon.cameras = [camHUD];
+			goopText.cameras = [camHUD];
 		}
 
 		if (isStoryMode)
@@ -1701,7 +1706,7 @@ class PlayState extends MusicBeatState
 					oldNote = null;
 				//Zalrek mod stuff
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote,false,false,false,songNotes[4], daNoteStyle);
-				trace (daNoteStyle);
+				//trace (daNoteStyle);
 
 				if (!gottaHitNote && PlayStateChangeables.Optimize)
 					continue;
@@ -2357,6 +2362,7 @@ class PlayState extends MusicBeatState
 		//Zalrek related code
 		if (curSong == 'Hell') {
 			goopIcon.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - 140);
+			goopText.x = goopIcon.x + 235;
 		}
 			
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
