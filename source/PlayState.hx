@@ -3141,7 +3141,7 @@ class PlayState extends MusicBeatState
 								{
 									vocals.volume = 0;
 									//Zalrek related code
-									if (theFunne && !daNote.isSustainNote)
+									if (theFunne && !daNote.isSustainNote )
 									{
 										noteMiss(daNote.noteData, daNote);
 									}
@@ -3225,8 +3225,9 @@ class PlayState extends MusicBeatState
 											misses++;
 										updateAccuracy();
 									}
+									//Zalrek: Ensure that goop notes don't count
 									else if (!daNote.wasGoodHit
-										&& !daNote.isSustainNote)
+										&& !daNote.isSustainNote && daNote.noteStyle != 'goop')
 									{
 										health -= 0.15;
 									}
@@ -3558,7 +3559,6 @@ class PlayState extends MusicBeatState
 			totalNotesHit += wife;
 
 		var daRating = Ratings.judgeNote(daNote);
-
 		
 		switch (daRating)
 		{
@@ -4400,7 +4400,7 @@ class PlayState extends MusicBeatState
 
 		if (!note.wasGoodHit)
 		{		
-			//Zalrek related code
+			//Zalrek: ensure goop notes don't count
 			if (note.noteStyle != 'goop') {
 
 				if (!note.isSustainNote)
@@ -4418,7 +4418,7 @@ class PlayState extends MusicBeatState
 
 				boyfriend.playAnim('sing' + dataSuffix[note.noteData] + altAnim, true);
 			}
-
+			//Zalrek: check if goop note was hit
 			else if (note.noteStyle == 'goop') {
 				++goopStacks;
 				if (curSong == 'Hell') {
