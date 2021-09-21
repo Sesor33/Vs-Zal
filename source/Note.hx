@@ -144,7 +144,7 @@ class Note extends FlxSprite
 				case 'unholy':
 					notePath = 'NOTE_assets_zal_unholy';
 				case 'goop':
-					notePath = 'NOTE_assets_zal_unholy';
+					notePath = 'NOTE_assets_zal_goop';
 				default:
 					notePath = 'NOTE_assets';
 			}
@@ -191,7 +191,7 @@ class Note extends FlxSprite
 						case 'unholy':
 							notePath = 'NOTE_assets_zal_unholy';
 						case 'goop':
-							notePath = 'NOTE_assets_zal_unholy';
+							notePath = 'NOTE_assets_zal_goop';
 						default:
 							notePath = 'NOTE_assets';
 					}

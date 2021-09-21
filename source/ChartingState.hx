@@ -2615,7 +2615,7 @@ class ChartingState extends MusicBeatState
 				if (noteStyle < 0){
 					noteStyle = styles.length - 1;
 				}
-				trace(noteStyle);
+				trace('Charting: ' + styles[noteStyle]);
 			}
 
 			if (FlxG.keys.justPressed.X) {
@@ -2624,7 +2624,7 @@ class ChartingState extends MusicBeatState
 				if (noteStyle == styles.length){
 					noteStyle = 0;
 				}
-				trace(noteStyle);
+				trace('Charting: ' + styles[noteStyle]);
 			}
 
 			if (FlxG.sound.music.time < 0 || curDecimalBeat < 0)

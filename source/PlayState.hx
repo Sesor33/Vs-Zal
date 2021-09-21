@@ -3140,6 +3140,7 @@ class PlayState extends MusicBeatState
 								else
 								{
 									vocals.volume = 0;
+									//Zalrek related code
 									if (theFunne && !daNote.isSustainNote)
 									{
 										noteMiss(daNote.noteData, daNote);
@@ -3191,7 +3192,9 @@ class PlayState extends MusicBeatState
 										goodNoteHit(daNote);
 									}
 									else
-										noteMiss(daNote.noteData, daNote);
+										//Zalrek related code										
+										noteMiss(daNote.noteData, daNote);										
+										
 								}
 
 								if (daNote.isParent && daNote.visible)
@@ -3556,6 +3559,7 @@ class PlayState extends MusicBeatState
 
 		var daRating = Ratings.judgeNote(daNote);
 
+		
 		switch (daRating)
 		{
 			case 'shit':
@@ -4197,7 +4201,9 @@ class PlayState extends MusicBeatState
 
 	function noteMiss(direction:Int = 1, daNote:Note):Void
 	{
-		if (!boyfriend.stunned)
+		
+
+		if (!boyfriend.stunned && daNote.noteStyle != 'goop')
 		{
 			//health -= 0.2;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
@@ -4393,21 +4399,32 @@ class PlayState extends MusicBeatState
 			mashViolations = 0;
 
 		if (!note.wasGoodHit)
-		{
-			if (!note.isSustainNote)
-			{
-				popUpScore(note);
-				combo += 1;
-			}
+		{		
+			//Zalrek related code
+			if (note.noteStyle != 'goop') {
 
-			var altAnim:String = "";
-			if (note.isAlt)
+				if (!note.isSustainNote)
 				{
-					altAnim = '-alt';
-					trace("Alt note on BF");
+					popUpScore(note);
+					combo += 1;
 				}
 
-			boyfriend.playAnim('sing' + dataSuffix[note.noteData] + altAnim, true);
+				var altAnim:String = "";
+				if (note.isAlt)
+					{
+						altAnim = '-alt';
+						trace("Alt note on BF");
+					}
+
+				boyfriend.playAnim('sing' + dataSuffix[note.noteData] + altAnim, true);
+			}
+
+			else if (note.noteStyle == 'goop') {
+				++goopStacks;
+				if (curSong == 'Hell') {
+						goopText.text = Std.string(goopStacks);
+				}			
+			}
 
 			#if cpp
 			if (luaModchart != null)
