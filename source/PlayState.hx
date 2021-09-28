@@ -224,10 +224,6 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var replayTxt:FlxText;
 
-	//Zalrek specific variables
-	var goopIcon:FlxSprite;
-	var goopText:FlxText;
-
 	public static var campaignScore:Int = 0;
 
 	public static var daPixelZoom:Float = 6;
@@ -254,8 +250,12 @@ class PlayState extends MusicBeatState
 	// Will decide if she's even allowed to headbang at all depending on the song
 	private var allowedToHeadbang:Bool = false;
 
+	//Zalrek specific variables
+	var goopIcon:FlxSprite;
+	var goopText:FlxText;
+	
 	//Zalrek Goop Note stuff
-	var healthBlockGoop:Float = 0.002;
+	var healthBlockGoop:Float = 0.004;
 	var goopStacks:Int = 0;
 
 	//Zalrek final song death dialogue
@@ -3139,7 +3139,10 @@ class PlayState extends MusicBeatState
 									totalNotesHit += 1;
 								else
 								{
-									vocals.volume = 0;
+									if (daNote.noteStyle != 'goop') {
+										vocals.volume = 0;
+									}								
+									//Zalrek related code
 									if (theFunne && !daNote.isSustainNote)
 									{
 										noteMiss(daNote.noteData, daNote);
@@ -3182,7 +3185,10 @@ class PlayState extends MusicBeatState
 							}
 							else
 							{
-								vocals.volume = 0;
+								//Zalrek related code, check if note type isn't goop. if not, then mute vocals
+								if (daNote.noteStyle != 'goop') {
+									vocals.volume = 0;
+								}								
 								if (theFunne && !daNote.isSustainNote)
 								{
 									if (PlayStateChangeables.botPlay)
@@ -3191,7 +3197,9 @@ class PlayState extends MusicBeatState
 										goodNoteHit(daNote);
 									}
 									else
-										noteMiss(daNote.noteData, daNote);
+										//Zalrek related code										
+										noteMiss(daNote.noteData, daNote);										
+										
 								}
 
 								if (daNote.isParent && daNote.visible)
@@ -3222,8 +3230,9 @@ class PlayState extends MusicBeatState
 											misses++;
 										updateAccuracy();
 									}
+									//Zalrek: Ensure that goop notes don't count
 									else if (!daNote.wasGoodHit
-										&& !daNote.isSustainNote)
+										&& !daNote.isSustainNote && daNote.noteStyle != 'goop')
 									{
 										health -= 0.15;
 									}
@@ -3555,7 +3564,7 @@ class PlayState extends MusicBeatState
 			totalNotesHit += wife;
 
 		var daRating = Ratings.judgeNote(daNote);
-
+		
 		switch (daRating)
 		{
 			case 'shit':
@@ -3584,7 +3593,15 @@ class PlayState extends MusicBeatState
 					totalNotesHit += 0.75;
 			case 'sick':
 				if (health < 2)
-					health += 0.04;
+					//Zalrek mod related stuff, goop notes prevent healing
+					if (goopStacks < 10) {
+						health += (0.04 - (healthBlockGoop * goopStacks));
+					}
+
+					else {
+						health += 0;
+					}
+					
 				if (FlxG.save.data.accuracyMod == 0)
 					totalNotesHit += 1;
 				sicks++;
@@ -4197,7 +4214,9 @@ class PlayState extends MusicBeatState
 
 	function noteMiss(direction:Int = 1, daNote:Note):Void
 	{
-		if (!boyfriend.stunned)
+		
+		//Zalrek mod stuff, prevents goop notes from counting as misses
+		if (!boyfriend.stunned && daNote.noteStyle != 'goop')
 		{
 			//health -= 0.2;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
@@ -4393,21 +4412,32 @@ class PlayState extends MusicBeatState
 			mashViolations = 0;
 
 		if (!note.wasGoodHit)
-		{
-			if (!note.isSustainNote)
-			{
-				popUpScore(note);
-				combo += 1;
-			}
+		{		
+			//Zalrek: ensure goop notes don't count
+			if (note.noteStyle != 'goop') {
 
-			var altAnim:String = "";
-			if (note.isAlt)
+				if (!note.isSustainNote)
 				{
-					altAnim = '-alt';
-					trace("Alt note on BF");
+					popUpScore(note);
+					combo += 1;
 				}
 
-			boyfriend.playAnim('sing' + dataSuffix[note.noteData] + altAnim, true);
+				var altAnim:String = "";
+				if (note.isAlt)
+					{
+						altAnim = '-alt';
+						trace("Alt note on BF");
+					}
+
+				boyfriend.playAnim('sing' + dataSuffix[note.noteData] + altAnim, true);
+			}
+			//Zalrek: check if goop note was hit
+			else if (note.noteStyle == 'goop') {
+				++goopStacks;
+				if (curSong == 'Hell') {
+						goopText.text = Std.string(goopStacks);
+				}			
+			}
 
 			#if cpp
 			if (luaModchart != null)
