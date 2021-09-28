@@ -224,10 +224,6 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var replayTxt:FlxText;
 
-	//Zalrek specific variables
-	var goopIcon:FlxSprite;
-	var goopText:FlxText;
-
 	public static var campaignScore:Int = 0;
 
 	public static var daPixelZoom:Float = 6;
@@ -254,8 +250,12 @@ class PlayState extends MusicBeatState
 	// Will decide if she's even allowed to headbang at all depending on the song
 	private var allowedToHeadbang:Bool = false;
 
+	//Zalrek specific variables
+	var goopIcon:FlxSprite;
+	var goopText:FlxText;
+	
 	//Zalrek Goop Note stuff
-	var healthBlockGoop:Float = 0.002;
+	var healthBlockGoop:Float = 0.004;
 	var goopStacks:Int = 0;
 
 	//Zalrek final song death dialogue
@@ -3588,7 +3588,15 @@ class PlayState extends MusicBeatState
 					totalNotesHit += 0.75;
 			case 'sick':
 				if (health < 2)
-					health += 0.04;
+					//Zalrek mod related stuff, goop notes prevent healing
+					if (goopStacks < 10) {
+						health += (0.04 - (healthBlockGoop * goopStacks));
+					}
+
+					else {
+						health += 0;
+					}
+					
 				if (FlxG.save.data.accuracyMod == 0)
 					totalNotesHit += 1;
 				sicks++;
@@ -4202,7 +4210,7 @@ class PlayState extends MusicBeatState
 	function noteMiss(direction:Int = 1, daNote:Note):Void
 	{
 		
-
+		//Zalrek mod stuff, prevents goop notes from counting as misses
 		if (!boyfriend.stunned && daNote.noteStyle != 'goop')
 		{
 			//health -= 0.2;
