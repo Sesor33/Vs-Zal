@@ -28,12 +28,6 @@ class StoryMenuState extends MusicBeatState
 	{
 		return [
 			['Tutorial'],
-			['Bopeebo', 'Fresh', 'Dad Battle'],
-			['Spookeez', 'South', "Monster"],
-			['Pico', 'Philly Nice', "Blammed"],
-			['Satin Panties', "High", "Milf"],
-			['Cocoa', 'Eggnog', 'Winter Horrorland'],
-			['Senpai', 'Roses', 'Thorns'],
 			['Exorcism', 'Umbral', 'Hell']
 		];
 	}
@@ -43,12 +37,6 @@ class StoryMenuState extends MusicBeatState
 
 	var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf'],
-		['dad', 'bf', 'gf'],
-		['spooky', 'bf', 'gf'],
-		['pico', 'bf', 'gf'],
-		['mom', 'bf', 'gf'],
-		['parents-christmas', 'bf', 'gf'],
-		['senpai', 'bf', 'gf'],
 		['zalrek', 'bf', 'gf'],
 	];
 
@@ -176,7 +164,7 @@ class StoryMenuState extends MusicBeatState
 
 		trace("Line 124");
 
-		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 10, grpWeekText.members[0].y + 10);
+		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 0, grpWeekText.members[0].y + 10);
 		leftArrow.frames = ui_tex;
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
