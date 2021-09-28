@@ -3139,11 +3139,9 @@ class PlayState extends MusicBeatState
 									totalNotesHit += 1;
 								else
 								{
-									if (daNote.noteStyle != 'goop') {
-										vocals.volume = 0;
-									}								
+									vocals.volume = 0;
 									//Zalrek related code
-									if (theFunne && !daNote.isSustainNote)
+									if (theFunne && !daNote.isSustainNote )
 									{
 										noteMiss(daNote.noteData, daNote);
 									}
@@ -3185,10 +3183,7 @@ class PlayState extends MusicBeatState
 							}
 							else
 							{
-								//Zalrek related code, check if note type isn't goop. if not, then mute vocals
-								if (daNote.noteStyle != 'goop') {
-									vocals.volume = 0;
-								}								
+								vocals.volume = 0;
 								if (theFunne && !daNote.isSustainNote)
 								{
 									if (PlayStateChangeables.botPlay)

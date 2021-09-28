@@ -200,6 +200,8 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.play('idle');
 		difficultySelectors.add(rightArrow);
 
+		trace("Line 150");
+
 		add(redBG);
 		add(grpWeekCharacters);
 
