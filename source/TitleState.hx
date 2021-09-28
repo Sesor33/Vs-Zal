@@ -484,7 +484,7 @@ class TitleState extends MusicBeatState
 			FlxG.camera.flash(FlxColor.RED, 4);
 			remove(credGroup);
 
-			FlxTween.tween(logoBl,{y: -5}, 1.4, {ease: FlxEase.expoInOut});
+			FlxTween.tween(logoBl,{y: 10}, 1.4, {ease: FlxEase.expoInOut});
 
 			logoBl.angle = -4;
 
