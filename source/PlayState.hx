@@ -2962,16 +2962,6 @@ class PlayState extends MusicBeatState
 								cpuStrums.forEach(function(spr:StaticArrow)
 								{
 									pressArrow(spr, spr.ID, daNote);
-									/*
-									if (spr.animation.curAnim.name == 'confirm' && SONG.noteStyle != 'pixel')
-									{
-										spr.centerOffsets();
-										spr.offset.x -= 13;
-										spr.offset.y -= 13;
-									}
-									else
-										spr.centerOffsets();
-									*/
 								});
 							}
 
@@ -3366,13 +3356,7 @@ class PlayState extends MusicBeatState
 				{
 					// adjusting the song name to be compatible
 					var songFormat = StringTools.replace(PlayState.storyPlaylist[0], " ", "-");
-					switch (songFormat)
-					{
-						case 'Dad-Battle':
-							songFormat = 'Dadbattle';
-						case 'Philly-Nice':
-							songFormat = 'Philly';
-					}
+					
 
 					var poop:String = Highscore.formatSong(songFormat, storyDifficulty);
 

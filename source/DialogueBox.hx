@@ -37,6 +37,9 @@ class DialogueBox extends FlxSpriteGroup
 
 	var sound:FlxSound;
 
+	//Zalrek mod stuff, sprite swapping
+	var curMood:String = '';
+
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
 		super();
@@ -231,6 +234,16 @@ class DialogueBox extends FlxSpriteGroup
 				//trace('Dialogue color should be 0xFF0097C4, but is ' + swagDialogue.color);
 				if (!portraitRight.visible)
 				{
+					portraitRight.frames = Paths.getSparrowAtlas('characters/portraits/Boyfriend', 'shared');
+					portraitRight.animation.addByPrefix('enter', curMood, 24, false);
+					portraitRight.setGraphicSize(Std.int(portraitRight.width * 1 * 0.75));
+					portraitRight.updateHitbox();
+					portraitRight.antialiasing = true;
+					portraitRight.scrollFactor.set();
+
+					portraitRight.x = (box.x + box.width) - (portraitRight.width) - 60;
+					portraitRight.y = box.y - 180;
+
 					portraitRight.visible = true;
 					portraitRight.animation.play('enter');
 				}
@@ -240,6 +253,15 @@ class DialogueBox extends FlxSpriteGroup
 				//trace('Dialogue color should be 0xFF820F0F, but is ' + swagDialogue.color);
 				if (!portraitLeft.visible)
 				{
+					portraitLeft.frames = Paths.getSparrowAtlas('characters/portraits/Zalrek', 'shared');
+					portraitLeft.animation.addByPrefix('enter', curMood, 24, false);
+					portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 1 * 0.75));
+					portraitLeft.updateHitbox();
+					portraitLeft.antialiasing = true;
+					portraitLeft.scrollFactor.set();
+
+					portraitLeft.x = box.x + portraitRight.width - 180;
+
 					portraitLeft.visible = true;
 					portraitLeft.animation.play('enter');
 				}
@@ -250,6 +272,17 @@ class DialogueBox extends FlxSpriteGroup
 	{
 		var splitName:Array<String> = dialogueList[0].split(":");
 		curCharacter = splitName[1];
-		dialogueList[0] = dialogueList[0].substr(splitName[1].length + 2).trim();
+
+		//Zalrek mod related stuff, getting mood from file
+		if (curCharacter == 'bf' || curCharacter == 'zalrek') {
+			curMood = splitName[2];
+			//trace('Character is ' + curCharacter + ' and mood is ' + curMood);
+			dialogueList[0] = dialogueList[0].substr(splitName[1].length + splitName[2].length + 3).trim();
+		}
+
+		else {
+			dialogueList[0] = dialogueList[0].substr(splitName[1].length + 2).trim();
+		}
+		
 	}
 }

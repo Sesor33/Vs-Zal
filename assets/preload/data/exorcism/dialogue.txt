@@ -1,5 +1,7 @@
-:zalrek:Huh?
-:bf:Beep.
-:zalrek:Oh, a mortal. How... annoying.
-:bf:Beeeeeep bop ska boop
-:zalrek:Guess we're going to do this the hard way.
+:zalrek:Neutral:Huh?
+:bf:Neutral:Beep.
+:zalrek:Neutral:Oh, a mortal. How... annoying.
+:bf:Neutral:Beeeeeep bop ska boop
+:zalrek:Talking:Leave, or else you'll get more than you bargained for.
+:bf:Smug:Beep boooooooop
+:zalrek:Talking:Guess we're going to do this the hard way.
