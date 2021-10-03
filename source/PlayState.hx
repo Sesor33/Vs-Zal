@@ -1606,8 +1606,9 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 				//Zalrek mod stuff
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, daNoteStyle);
-				trace(daNoteStyle);
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, false, daNoteStyle);
+				//trace('Current style is: ' + daNoteStyle);
+				//trace('But swagNote style is: ' + swagNote.noteStyle);
 
 				if (!gottaHitNote && PlayStateChangeables.Optimize)
 					continue;
@@ -1633,7 +1634,7 @@ class PlayState extends MusicBeatState
 
 					//Zalrek mod stuff, note type adding
 					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true, daNoteStyle);
-					trace(daNoteStyle);
+					//trace(daNoteStyle);
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
 					sustainNote.isAlt = songNotes[3];
@@ -2572,6 +2573,9 @@ class PlayState extends MusicBeatState
 				persistentDraw = false;
 				paused = true;
 
+				//Zalrek mod stuff, reset goop stacks on death			
+				goopStacks = 0;
+
 				vocals.stop();
 				FlxG.sound.music.stop();
 
@@ -2904,12 +2908,16 @@ class PlayState extends MusicBeatState
 									totalNotesHit += 1;
 								else
 								{
-									vocals.volume = 0;
+									//Zalrek mod stuff, make sure goop notes dont mute audio
+									if (daNote.noteStyle != 'goop') {
+										vocals.volume = 0;
+									}
+									
 									if (theFunne && !daNote.isSustainNote)
 									{
 										noteMiss(daNote.noteData, daNote);
 									}
-									if (daNote.isParent)
+									if (daNote.isParent && daNote.noteStyle != 'goop')
 									{
 										health -= 0.15; // give a health punishment for failing a LN
 										trace("hold fell over at the start");
@@ -2924,7 +2932,7 @@ class PlayState extends MusicBeatState
 										if (!daNote.wasGoodHit
 											&& daNote.isSustainNote
 											&& daNote.sustainActive
-											&& daNote.spotInLine != daNote.parent.children.length)
+											&& daNote.spotInLine != daNote.parent.children.length && daNote.noteStyle != 'goop')
 										{
 											health -= 0.2; // give a health punishment for failing a LN
 											trace("hold fell over at " + daNote.spotInLine);
@@ -2939,14 +2947,19 @@ class PlayState extends MusicBeatState
 										}
 										else
 										{
-											health -= 0.15;
+											if (daNote.noteStyle != 'goop')
+												health -= 0.15;
 										}
 									}
 								}
 							}
 							else
 							{
-								vocals.volume = 0;
+								//Zalrek related code, check if note type isn't goop. if not, then mute vocals
+								if (daNote.noteStyle != 'goop') {		
+									vocals.volume = 0;
+								}						
+								
 								if (theFunne && !daNote.isSustainNote)
 								{
 									if (PlayStateChangeables.botPlay)
@@ -2988,7 +3001,9 @@ class PlayState extends MusicBeatState
 											misses++;
 										updateAccuracy();
 									}
-									else
+									//zalrek mod related code, check if its not a goop note
+									else if (!daNote.wasGoodHit
+										&& !daNote.isSustainNote && daNote.noteStyle != 'goop')
 									{
 										health -= 0.15;
 									}
@@ -3279,7 +3294,14 @@ class PlayState extends MusicBeatState
 					totalNotesHit += 0.75;
 			case 'sick':
 				if (health < 2)
-					health += 0.04;
+					//Zalrek mod related stuff, goop notes prevent healing
+					if (goopStacks < 10) {
+						health += (0.04 - (healthBlockGoop * goopStacks));
+					}
+
+					else {
+						health += 0;
+					}
 				if (FlxG.save.data.accuracyMod == 0)
 					totalNotesHit += 1;
 				sicks++;
@@ -3883,8 +3905,9 @@ class PlayState extends MusicBeatState
 	}
 
 	function noteMiss(direction:Int = 1, daNote:Note):Void
-	{
-		if (!boyfriend.stunned)
+	{	
+		//Zalrek mod stuff, prevents goop notes from counting as misses
+		if (!boyfriend.stunned && daNote.noteStyle != 'goop')
 		{
 			//health -= 0.2;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
@@ -3951,26 +3974,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	/*function badNoteCheck()
-			{
-				// just double pasting this shit cuz fuk u
-				// REDO THIS SYSTEM!
-				var upP = controls.UP_P;
-				var rightP = controls.RIGHT_P;
-				var downP = controls.DOWN_P;
-				var leftP = controls.LEFT_P;
 
-				if (leftP)
-					noteMiss(0);
-				if (upP)
-					noteMiss(2);
-				if (rightP)
-					noteMiss(3);
-				if (downP)
-					noteMiss(1);
-				updateAccuracy();
-			}
-	 */
 	function updateAccuracy()
 	{
 		totalPlayed += 1;
@@ -4077,23 +4081,35 @@ class PlayState extends MusicBeatState
 
 		if (!note.wasGoodHit)
 		{
-			if (!note.isSustainNote)
-			{
-				popUpScore(note);
-				combo += 1;
+			//Zalrek mod stuff, ensure goop notes don't count
+			if (note.noteStyle != 'goop') {
+				if (!note.isSustainNote)
+					{
+						popUpScore(note);
+						combo += 1;
+					}
+					else
+						totalNotesHit += 1;
+		
+					var altAnim:String = "";
+					if (note.isAlt)
+						{
+							altAnim = '-alt';
+							trace("Alt note on BF");
+						}
+		
+					boyfriend.playAnim('sing' + dataSuffix[note.noteData] + altAnim, true);
 			}
-			else
-				totalNotesHit += 1;
 
-			var altAnim:String = "";
-			if (note.isAlt)
-				{
-					altAnim = '-alt';
-					trace("Alt note on BF");
-				}
+			//Zalrek mod stuff, check if goop note was hit
+			if (note.noteStyle == 'goop') {
+				++goopStacks;
+				if (curSong == 'Hell') {
+						goopText.text = Std.string(goopStacks);
+				}			
+			}
 
-			boyfriend.playAnim('sing' + dataSuffix[note.noteData] + altAnim, true);
-
+			
 			#if cpp
 			if (luaModchart != null)
 				luaModchart.executeState('playerOneSing', [note.noteData, Conductor.songPosition]);

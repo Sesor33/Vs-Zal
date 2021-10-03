@@ -71,7 +71,7 @@ class Note extends FlxSprite
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inCharter:Bool = false, ?isAlt:Bool = false, ?noteStyle:String = "normal")
 	{
 		super();
-		//this.noteStyle = noteStyle;
+		this.noteStyle = noteStyle;
 		if (prevNote == null)
 			prevNote = this;
 
