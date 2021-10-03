@@ -48,9 +48,9 @@ class Character extends FlxSprite
 
 				loadOffsetFile(curCharacter);
 
-				playAnim('danceRight');		
-		
+				playAnim('danceRight');
 
+			
 			case 'bf':
 				var tex = Paths.getSparrowAtlas('BOYFRIEND','shared',true);
 				frames = tex;
@@ -78,24 +78,24 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
-				flipX = true;
+				flipX = true;	
 
-			case 'zalrek':
-				frames = Paths.getSparrowAtlas('Zalrek_Assets','shared',true);
-				animation.addByPrefix('idle', 'ZalIdle', 24, false);
-				animation.addByPrefix('singUP', 'Zal Up', 24, false);
-				animation.addByPrefix('singDOWN', 'Zal Down', 24, false);
-				animation.addByPrefix('singLEFT', 'Zal Left', 24, false);
-				animation.addByPrefix('singRIGHT', 'Zal Right', 24, false);
-
-				loadOffsetFile(curCharacter);
-
-				playAnim('idle');
+				case 'zalrek':
+					frames = Paths.getSparrowAtlas('Zalrek_Assets','shared',true);
+					animation.addByPrefix('idle', 'ZalIdle', 24, false);
+					animation.addByPrefix('singUP', 'Zal Up', 24, false);
+					animation.addByPrefix('singDOWN', 'Zal Down', 24, false);
+					animation.addByPrefix('singLEFT', 'Zal Left', 24, false);
+					animation.addByPrefix('singRIGHT', 'Zal Right', 24, false);
+	
+					loadOffsetFile(curCharacter);
+	
+					playAnim('idle');
 		}
 
 		dance();
 
-		if (isPlayer && frames != null)
+		if (isPlayer)
 		{
 			flipX = !flipX;
 

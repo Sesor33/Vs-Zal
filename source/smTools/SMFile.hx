@@ -134,8 +134,7 @@ class SMFile
             noteStyle: 'normal',
             stage: 'stage',
             speed: 1.0,
-            validScore: false,
-            chartVersion: "",
+            validScore: false
         };
 
         // lets check if the sm loading was valid
@@ -245,16 +244,16 @@ class SMFile
                     switch(numba)
                     {
                         case 1: // normal
-                            section.sectionNotes.push([rowTime,lane ,0,0, currentBeat]);
+                            section.sectionNotes.push([rowTime,lane ,0]);
                         case 2: // held head
-                            heldNotes[lane] = [rowTime,lane,0,0, currentBeat];
+                            heldNotes[lane] = [rowTime,lane,0];
                         case 3: // held tail
                             var data = heldNotes[lane];
                             var timeDiff = rowTime - data[0];
-                            section.sectionNotes.push([data[0],lane,timeDiff,0, data[4]]);
+                            section.sectionNotes.push([data[0],lane,timeDiff]);
                             heldNotes[index] = [];
                         case 4: // roll head
-                            heldNotes[lane] = [rowTime,lane,0,0, currentBeat];
+                            heldNotes[lane] = [rowTime,lane,0];
                     }
                     index++;
                 }
@@ -327,8 +326,6 @@ class SMFile
         //song.notes = newSections;
 
         // save da song
-
-        song.chartVersion = Song.latestChart;
 
 		var json = {
 			"song": song

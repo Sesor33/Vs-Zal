@@ -2,7 +2,7 @@
 package;
 
 import lime.app.Application;
-#if desktop
+#if windows
 import Discord.DiscordClient;
 #end
 import openfl.display.BitmapData;
@@ -50,7 +50,7 @@ class Caching extends MusicBeatState
 	override function create()
 	{
 
-		FlxG.save.bind('vszalrek', 'FNF - Vs Zalrek');
+		FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		PlayerSettings.init();
 
@@ -152,7 +152,6 @@ class Caching extends MusicBeatState
 
 	function cache()
 	{
-		#if !linux
 		trace("LOADING: " + toBeDone + " OBJECTS.");
 
 		for (i in images)
@@ -182,7 +181,6 @@ class Caching extends MusicBeatState
 
 		trace(Assets.cache.hasBitmapData('GF_assets'));
 
-		#end
 		FlxG.switchState(new TitleState());
 	}
 

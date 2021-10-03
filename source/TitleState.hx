@@ -6,7 +6,6 @@ import smTools.SMFile;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
@@ -28,7 +27,7 @@ import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
 
-#if desktop
+#if windows
 import Discord.DiscordClient;
 #end
 
@@ -47,11 +46,6 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
-
-	//Zalrek mod variables
-	var embersFG:FlxBackdrop;
-	var embersBG:FlxBackdrop;
-	var titleBG:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -75,7 +69,7 @@ class TitleState extends MusicBeatState
 		
 		#if !cpp
 
-		FlxG.save.bind('vszalrek', 'FNF - Vs Zalrek');
+		FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		PlayerSettings.init();
 
@@ -90,7 +84,7 @@ class TitleState extends MusicBeatState
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
-		trace('hello, mortal');
+		trace('hello');
 
 		// DEBUG BULLSHIT
 
@@ -136,47 +130,25 @@ class TitleState extends MusicBeatState
 		// bg.updateHitbox();
 		add(bg);
 
-		//Zalrek mod related stuff
-		titleBG = new FlxSprite().loadGraphic(Paths.image('titleBG'));
-		titleBG.screenCenter();
-		titleBG.scale.set(1.3,1.3);
-		titleBG.antialiasing = true;
-		add(titleBG);
-
-		embersFG = new FlxBackdrop(Paths.image('embersFG'), 1, 1, true, true);
-		embersFG.updateHitbox();
-		embersFG.antialiasing = true;
-		embersFG.scrollFactor.set();
-		add(embersFG);
-
-		embersBG = new FlxBackdrop(Paths.image('embersBG'), 1, 1, true, true);
-		embersBG.updateHitbox();
-		embersBG.antialiasing = true;
-		embersBG.scrollFactor.set();
-		add(embersBG);
-
-
 		if (Main.watermarks) {
-			logoBl = new FlxSprite(350, 700);
-			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+			logoBl = new FlxSprite(-150, 1500);
+			logoBl.frames = Paths.getSparrowAtlas('KadeEngineLogoBumpin');
 		} else {
-			logoBl = new FlxSprite(0, 0);
+			logoBl = new FlxSprite(-150, -100);
 			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		}
 		logoBl.antialiasing = FlxG.save.data.antialiasing;
-		//logoBl.scale.set(0.9,0.9);
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.updateHitbox();
-		
+		// logoBl.screenCenter();
+		// logoBl.color = FlxColor.BLACK;
 
-	/*
 		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		gfDance.antialiasing = FlxG.save.data.antialiasing;
-		add(gfDance);		
-	*/
+		add(gfDance);
 		add(logoBl);
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
@@ -284,9 +256,6 @@ class TitleState extends MusicBeatState
 			FlxG.fullscreen = !FlxG.fullscreen;
 		}
 
-		embersFG.y -= 0.15;
-		embersBG.y -= 0.06;
-
 		var pressedEnter:Bool = controls.ACCEPT;
 
 		#if mobile
@@ -312,7 +281,7 @@ class TitleState extends MusicBeatState
 			if (FlxG.save.data.flashing)
 				titleText.animation.play('press');
 
-			FlxG.camera.flash(FlxColor.RED, 1);
+			FlxG.camera.flash(FlxColor.WHITE, 1);
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
@@ -401,13 +370,12 @@ class TitleState extends MusicBeatState
 		super.beatHit();
 
 		logoBl.animation.play('bump', true);
-	/*	danceLeft = !danceLeft;
+		danceLeft = !danceLeft;
 
 		if (danceLeft)
 			gfDance.animation.play('danceRight');
 		else
 			gfDance.animation.play('danceLeft');
-		*/
 
 		FlxG.log.add(curBeat);
 
@@ -416,7 +384,7 @@ class TitleState extends MusicBeatState
 			case 0:
 				deleteCoolText();
 			case 1:
-				createCoolText(['Tech','Ninjamuffin99','and','Kawaiisprite']);
+				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 			// credTextShit.visible = true;
 			case 3:
 				addMoreText('present');
@@ -460,13 +428,13 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Vs');
+				addMoreText('Friday');
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('Zalrek');
+				addMoreText('Night');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Full Week'); // credTextShit.text += '\nFunkin';
+				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();
@@ -481,10 +449,10 @@ class TitleState extends MusicBeatState
 		{
 			remove(ngSpr);
 
-			FlxG.camera.flash(FlxColor.RED, 4);
+			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 
-			FlxTween.tween(logoBl,{y: 10}, 1.4, {ease: FlxEase.expoInOut});
+			FlxTween.tween(logoBl,{y: -100}, 1.4, {ease: FlxEase.expoInOut});
 
 			logoBl.angle = -4;
 

@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Vs Zalrek" file="Vs Zalrek" packageName="com.funkin.vszalrek" package="com.funkin.vszalrek" main="Main" version="0.2.7.1"/>
+	<app title="Friday Night Funkin': Kade Engine" file="Kade Engine" packageName="com.kadedev.kadeengine" package="com.kadedev.kadeengine" main="Main" version="0.2.7.1" company="kadedev" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -59,7 +59,6 @@
 		<library name="week4"    preload="true" />
 		<library name="week5"    preload="true" />
 		<library name="week6"    preload="true" />
-		<library name="week7"    preload="true" />
 		<library name="sm"    preload="true" />
 	</section>
 	
@@ -73,7 +72,6 @@
 		<library name="week4"    preload="false" />
 		<library name="week5"    preload="false" />
 		<library name="week6"    preload="false" />
-		<library name="week7"    preload="false" />
 		<library name="sm"    preload="false" />
 	</section>
 	
@@ -95,8 +93,6 @@
 	<assets path="assets/week5"    library="week5"    exclude="*.mp3" unless="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.ogg" if="web"/>
 	<assets path="assets/week6"    library="week6"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week7"    library="week7"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week7"    library="week7"    exclude="*.mp3" unless="web"/>
 	<assets path="assets/sm"    library="sm"    exclude="*.ogg" if="web"/>
 	<assets path="assets/sm"    library="sm"    exclude="*.mp3" unless="web"/>
 
@@ -130,9 +126,9 @@
 	<haxelib name="newgrounds"/>
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod"/>
-	<haxelib name="discord_rpc" if="desktop"/>
+	<haxelib name="discord_rpc" if="windows"/>
 	<haxelib name="linc_luajit"/>
-	<haxelib name="hxvm-luajit" if="desktop"/>
+
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
 	<!-- <haxelib name="markdown" /> -->
@@ -188,8 +184,6 @@
 	<icon path="art/icon512.png" size='512'/>
 	<icon path="art/iconOG.png" />
 
-	<haxeflag name="--no-traces" unless="debug" />
-	<haxeflag name="--dce full" if="release" />
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
 	<haxedef name="NG_LOGIN" if="newgrounds" />
