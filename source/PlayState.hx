@@ -42,6 +42,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
+import flixel.addons.text.FlxTypeText;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.effects.FlxTrail;
 import flixel.addons.effects.FlxTrailArea;
@@ -266,7 +267,7 @@ class PlayState extends MusicBeatState
 	public static var deaths:Int = 0;
 	public static var speechBubble:FlxSprite;
 	public static var zalPortrait:FlxSprite;
-	public static var hintText:FlxText;
+	public static var hintText:FlxTypeText;
 	public static var hintDropText:FlxText;
 
 	// Per song additive offset
@@ -1000,6 +1001,34 @@ class PlayState extends MusicBeatState
 			rep = new Replay("na");
 
 		//Zalrek mod stuff, death dialogue
+		zalPortrait = new FlxSprite(-20, 40);
+		zalPortrait.frames = Paths.getSparrowAtlas('characters/portraits/Zalrek', 'shared');
+		zalPortrait.animation.addByPrefix('enter', 'Angry', 24, false);
+		zalPortrait.setGraphicSize(Std.int(zalPortrait.width * 1 * 0.75));
+		zalPortrait.antialiasing = true;
+
+		speechBubble = new FlxSprite(0, 45);
+		speechBubble.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared'); //replace later
+		speechBubble.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+		speechBubble.animation.addByIndices('normal', 'speech bubble normal', [4], "", 24);
+		speechBubble.scale.set(0.9, 0.9);
+		speechBubble.y = (FlxG.height - speechBubble.height) + 80;
+		speechBubble.screenCenter(X);
+		
+
+		hintText = new FlxTypeText(240, 530, Std.int(FlxG.width * 0.6), "", 32);
+		hintText.font = 'Pixel Arial 11 Bold';
+		hintText.color = 0xFF820F0F;
+		hintText.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+
+		hintDropText = new FlxText(242, 532, Std.int(FlxG.width * 0.6), "", 32);
+		hintDropText.font = 'Pixel Arial 11 Bold';
+		hintDropText.color = FlxColor.BLACK;
+
+		zalPortrait.cameras = [camHUD];
+		speechBubble.cameras = [camHUD];
+		hintText.cameras = [camHUD];
+		hintDropText.cameras = [camHUD];
 		
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, releaseInput);

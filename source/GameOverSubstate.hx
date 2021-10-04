@@ -6,6 +6,8 @@ import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.tweens.FlxTween;
+import flixel.system.FlxSound;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -13,6 +15,10 @@ class GameOverSubstate extends MusicBeatSubstate
 	var camFollow:FlxObject;
 
 	var stageSuffix:String = "";
+
+	//Zalrek mod related variables
+	var zalInsultDialogue:Array<String> = [];
+	var disableInput:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{
@@ -46,6 +52,38 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.camera.target = null;
 
 		bf.playAnim('firstDeath');
+
+		//Zalrek mod stuff, game over text
+		trace('you died. song is ' + PlayState.SONG.song);
+		trace ('also you have died ' + PlayState.deaths + ' times');
+		if (PlayState.SONG.song == 'Exsanguination' && PlayState.deaths >= 0) {
+			zalInsultDialogue = CoolUtil.coolTextFile(Paths.txt('data/exsanguination/insults'));
+
+			add(PlayState.zalPortrait);
+			add(PlayState.speechBubble);
+			add(PlayState.hintDropText);
+			add(PlayState.hintText);
+
+			PlayState.zalPortrait.animation.play('enter');
+			FlxTween.tween(PlayState.zalPortrait, {alpha: 1}, 0.1);
+			PlayState.speechBubble.animation.play('normalOpen');
+			PlayState.speechBubble.animation.finishCallback = function(anim:String):Void {
+
+				PlayState.hintText.resetText(zalInsultDialogue[PlayState.deaths - 1]);
+				PlayState.hintText.start(0.04, true);
+				PlayState.hintText.completeCallback = function()
+				{
+					disableInput = false;
+				}
+			}
+		}
+
+		if (PlayState.SONG.song == 'Exsanguination') {
+			PlayState.deaths++;
+			if (PlayState.deaths >= zalInsultDialogue.length - 1) {		
+				PlayState.deaths = 0;
+			}
+		}
 	}
 
 	var startVibin:Bool = false;
@@ -54,10 +92,17 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
-		if (controls.ACCEPT)
+		if (controls.ACCEPT && !disableInput)
 		{
 			endBullshit();
 		}
+
+		else if (controls.ACCEPT && startVibin && !disableInput) {				
+			FlxG.sound.play(Paths.sound('clickText'), 0.4);
+			PlayState.hintText.resetText(zalInsultDialogue[PlayState.deaths]);
+			PlayState.hintText.start(0.04, true);
+		}
+			
 
 		if(FlxG.save.data.InstantRespawn)
 		{
@@ -90,6 +135,9 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			Conductor.songPosition = FlxG.sound.music.time;
 		}
+
+		if (PlayState.hintDropText.text != PlayState.hintText.text)
+			PlayState.hintDropText.text = PlayState.hintText.text;
 	}
 
 	override function beatHit()
