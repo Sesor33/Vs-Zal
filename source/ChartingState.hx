@@ -1419,7 +1419,7 @@ class ChartingState extends MusicBeatState
 
 						var thing = ii.sectionNotes[ii.sectionNotes.length - 1];
 
-						var note:Note = new Note(strum, Math.floor(i[1] % 4),null,false,true, false, i[5]);
+						var note:Note = new Note(strum, Math.floor(i[1] % 4),null,false,true, false, i[i.length-1]);
 						note.rawNoteData = i[1];
 						note.sustainLength = i[2];
 						note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
@@ -2667,10 +2667,11 @@ class ChartingState extends MusicBeatState
 				var daNoteInfo = i[1];
 				var daStrumTime = i[0];
 				var daSus = i[2];
-				var daStyle = i[5];
+				var daStyle = i[i.length-1];
 				//trace(daStyle);
 
-				var note:Note = new Note(daStrumTime, daNoteInfo % 4,null,false,true,i[3],i[5]);
+				//Zalrek mod stuff, last one is i.length-1 because some notes have 5 vars and some have 6 due to KE1.7 porting
+				var note:Note = new Note(daStrumTime, daNoteInfo % 4,null,false,true,i[3],i[i.length-1]);
 				note.rawNoteData = daNoteInfo;
 				note.sustainLength = daSus;
 				note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
