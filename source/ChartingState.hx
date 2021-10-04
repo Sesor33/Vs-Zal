@@ -1412,12 +1412,14 @@ class ChartingState extends MusicBeatState
 					{
 						trace("new strum " + strum + " - at section " + section);
 						// alright we're in this section lets paste the note here.
-						var newData = [strum,i[1],i[2]];
+						//Zalrek mod stuff, pushing the note type
+						var newData = [strum,i[1],i[2],i[3],i[4],i[5]];
+						trace(i[5]);
 						ii.sectionNotes.push(newData);
 
 						var thing = ii.sectionNotes[ii.sectionNotes.length - 1];
 
-						var note:Note = new Note(strum, Math.floor(i[1] % 4),null,false,true, i[5]);
+						var note:Note = new Note(strum, Math.floor(i[1] % 4),null,false,true, false, i[5]);
 						note.rawNoteData = i[1];
 						note.sustainLength = i[2];
 						note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));
@@ -2666,6 +2668,7 @@ class ChartingState extends MusicBeatState
 				var daStrumTime = i[0];
 				var daSus = i[2];
 				var daStyle = i[5];
+				//trace(daStyle);
 
 				var note:Note = new Note(daStrumTime, daNoteInfo % 4,null,false,true,i[3],i[5]);
 				note.rawNoteData = daNoteInfo;
@@ -3023,14 +3026,16 @@ class ChartingState extends MusicBeatState
 		if (section == null)
 			return;
 
+		//Zalrek mod stuff, push note style
 		var noteStrum = strum;
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
 		var noteSus = 0;
+		var noteStyle = styles[this.noteStyle];
 
 		if (n != null)
-			section.sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, false]);
+			section.sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, false, noteStyle]);
 		else
-			section.sectionNotes.push([noteStrum, noteData, noteSus, false]);
+			section.sectionNotes.push([noteStrum, noteData, noteSus, false, noteStyle]);
 
 		var thingy = section.sectionNotes[section.sectionNotes.length - 1];
 
@@ -3040,7 +3045,7 @@ class ChartingState extends MusicBeatState
 
 		if (n == null)
 		{
-			var note:Note = new Note(noteStrum, noteData % 4,null,false,true,styles[this.noteStyle]);
+			var note:Note = new Note(noteStrum, noteData % 4,null,false,true,false,styles[this.noteStyle]);
 			note.rawNoteData = noteData;
 			note.sustainLength = noteSus;
 			note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));

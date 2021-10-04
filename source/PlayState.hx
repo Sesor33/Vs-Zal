@@ -1534,7 +1534,7 @@ class PlayState extends MusicBeatState
 					daStrumTime = 0;
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
 				//Zalrek mod stuff, note style adding
-				var daNoteStyle:String = songNotes[5];
+				var daNoteStyle:String = songNotes[songNotes.length-1];
 
 				var gottaHitNote:Bool = section.mustHitSection;
 
