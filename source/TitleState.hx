@@ -482,7 +482,7 @@ class TitleState extends MusicBeatState
 		{
 			remove(ngSpr);
 
-			FlxG.camera.flash(FlxColor.RED, 4);
+			FlxG.camera.flash(FlxColor.BLACK, 4);
 			remove(credGroup);
 
 			FlxTween.tween(logoBl,{y: 10}, 1.4, {ease: FlxEase.expoInOut});

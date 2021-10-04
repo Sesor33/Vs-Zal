@@ -266,6 +266,8 @@ class PlayState extends MusicBeatState
 	public static var deaths:Int = 0;
 	public static var speechBubble:FlxSprite;
 	public static var zalPortrait:FlxSprite;
+	public static var hintText:FlxText;
+	public static var hintDropText:FlxText;
 
 	// Per song additive offset
 	public static var songOffset:Float = 0;
@@ -997,6 +999,8 @@ class PlayState extends MusicBeatState
 		if (!loadRep)
 			rep = new Replay("na");
 
+		//Zalrek mod stuff, death dialogue
+		
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, releaseInput);
 		super.create();

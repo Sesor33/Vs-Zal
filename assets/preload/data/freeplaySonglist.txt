@@ -2,3 +2,4 @@ Tutorial:gf:0
 Exorcism:zalrek:1
 Umbral:zalrek:1
 Hell:zalrek:1
+Exsanguination:zalrek:1
