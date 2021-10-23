@@ -241,7 +241,7 @@ class DialogueBox extends FlxSpriteGroup
 					portraitRight.antialiasing = true;
 					portraitRight.scrollFactor.set();
 
-					portraitRight.x = (box.x + box.width) - (portraitRight.width) - 60;
+					portraitRight.x = (box.x + box.width) - (portraitRight.width) - 100;
 					portraitRight.y = box.y - 180;
 
 					portraitRight.visible = true;
