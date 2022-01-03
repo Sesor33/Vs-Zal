@@ -80,6 +80,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (PlayState.SONG.song == 'Exsanguination') {
 			PlayState.deaths++;
+			//This makes sure the initial dialogue plays
 			if (PlayState.deaths >= zalInsultDialogue.length - 1) {		
 				PlayState.deaths = 0;
 			}
